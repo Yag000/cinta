@@ -7,12 +7,12 @@ void test_testo(test_info *info);
 void test_null(test_info *info);
 
 test_info *test_test() {
-    TestFunction cases[] = {test_testo, test_null};
+    test_case cases[2] = {test_testo, test_null};
     return run_cases("test", cases, 2);
 }
 
 void test_testo(test_info *info) {
-    CHECK(check_boolean, 1, 1, info);
+    CHECK(check_boolean, 1, 0, info);
 }
 
 void test_null(test_info *info) {

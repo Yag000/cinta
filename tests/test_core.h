@@ -23,12 +23,14 @@ test_info *create_test_info();
 void destroy_test_info(test_info *);
 void print_test_info(const test_info *);
 
-// Test utils
-double clock_ticks_to_seconds(clock_t);
+typedef void (*test_case)(test_info *);
 
-typedef void (*TestFunction)(test_info *);
+test_info *run_cases(const char *name, test_case *functions, int num_functions);
 
-test_info *run_cases(const char *config, TestFunction *functions, int num_functions);
+// A test is a function that takes no arguments and returns a test_info*
+typedef test_info *(*test)();
+
+int run_tests(test *tests, int num_tests);
 
 void check_string(const char *, const char *, int, const char *, test_info *);
 void check_boolean(bool, bool, int, const char *, test_info *);
@@ -37,5 +39,6 @@ void check_null(void *actual, int line, const char *file, test_info *info);
 
 // All the tests
 test_info *test_test();
+test_info *test_test2();
 
 #endif // TEST_CORE_H

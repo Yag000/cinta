@@ -78,23 +78,53 @@ void print_test_name(const char *name) {
     }
 }
 
-void run_test(const char *name, TestFunction test, test_info *info) {
+void run_case(const char *name, test_case test, test_info *info) {
     print_test_header(name);
     test(info);
 }
 
-test_info *run_cases(const char *name, TestFunction *cases, int size) {
+test_info *run_cases(const char *name, test_case *cases, int size) {
     print_test_header(name);
     clock_t start = clock();
     test_info *info = create_test_info();
 
     for (int i = 0; i < size; i++) {
-        run_test(name, cases[i], info);
+        run_case(name, cases[i], info);
     }
 
     info->time = clock_ticks_to_seconds(clock() - start);
     print_test_footer(name, info);
     return info;
+}
+
+static void update_test_info(test_info *target_info, test_info *origin_info) {
+    target_info->passed += origin_info->passed;
+    target_info->failed += origin_info->failed;
+    target_info->total += origin_info->total;
+
+    destroy_test_info(origin_info);
+}
+
+int run_tests(test *tests, int size) {
+    // Create the test info
+    test_info *info = create_test_info();
+    clock_t start = clock();
+
+    for (int i = 0; i < size; i++) {
+        test_info *test_info = tests[i]();
+        update_test_info(info, test_info);
+    }
+
+    // End of tests
+    clock_t end = clock();
+    info->time = clock_ticks_to_seconds(end - start);
+    bool success = info->passed == info->total;
+
+    printf("\nTotal: ");
+    print_test_info(info);
+    destroy_test_info(info);
+
+    return success ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 void check_string(const char *expected, const char *actual, int line, const char *file, test_info *info) {

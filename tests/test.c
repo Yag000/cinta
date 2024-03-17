@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -25,29 +23,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // Create the test info
-    test_info *info = create_test_info();
-    clock_t start = clock();
+    test tests[] = {test_test, test_test2};
 
-    // Add tests here
-    update_test_info(info, test_test());
-
-    // End of tests
-    clock_t end = clock();
-    info->time = clock_ticks_to_seconds(end - start);
-    bool success = info->passed == info->total;
-
-    printf("\nTotal: ");
-    print_test_info(info);
-    destroy_test_info(info);
-
-    return success ? EXIT_SUCCESS : EXIT_FAILURE;
-}
-
-static void update_test_info(test_info *target_info, test_info *origin_info) {
-    target_info->passed += origin_info->passed;
-    target_info->failed += origin_info->failed;
-    target_info->total += origin_info->total;
-
-    destroy_test_info(origin_info);
+    return run_tests(tests, 2);
 }
