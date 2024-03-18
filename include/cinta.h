@@ -7,8 +7,6 @@
 #define CHECK(checker, actual, expected, info) checker(actual, expected, __LINE__, __FILE__, info)
 #define CHECK_NULL(actual, info) check_null(actual, __LINE__, __FILE__, info)
 
-typedef enum speed_level { SLOW, FAST } speed_level;
-
 extern bool debug;
 extern bool allow_slow;
 
@@ -24,11 +22,19 @@ test_info *create_test_info();
 void destroy_test_info(test_info *);
 void print_test_info(const test_info *);
 
+typedef enum speed_level { SLOW, QUICK } speed_level;
+
 typedef struct test_case {
     const speed_level speed;
     const char *name;
     void (*function)(test_info *);
 } test_case;
+
+#define TEST_CASE(name, speed, function)                                                                               \
+    { speed, name, function }
+
+#define SLOW_CASE(name, function) TEST_CASE(name, SLOW, function)
+#define QUICK_CASE(name, function) TEST_CASE(name, QUICK, function)
 
 test_info *run_cases(const char *name, test_case *functions, int num_functions);
 
