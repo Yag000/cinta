@@ -18,8 +18,10 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 examples: $(EXAMPLEFILES) $(OBJFILES)
 	$(CC) -o example $(EXAMPLEFILES) $(OBJFILES) $(CFLAGS)
 
+fmt: format
+
 format:
-	clang-format -i $(SRCDIR)/*.c $(TESTDIR)/*.c $(EXAMPLEDIR)/*.c include/*.h
+	clang-format -i $(SRCDIR)/*.c $(EXAMPLEDIR)/*.c include/*.h
 
 clean:
 	rm -rf $(OBJDIR) example
