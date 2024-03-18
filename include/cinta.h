@@ -2,6 +2,7 @@
 #define CINTA_H
 
 #include <stdbool.h>
+#include <string.h>
 
 #define CHECK(checker, actual, expected, info) checker(actual, expected, __LINE__, __FILE__, info)
 #define CHECK_NULL(actual, info) check_null(actual, __LINE__, __FILE__, info)
@@ -41,4 +42,18 @@ void check_boolean(bool, bool, int, const char *, test_info *);
 void check_int(int, int, int, const char *, test_info *);
 void check_null(void *actual, int line, const char *file, test_info *info);
 
+#define CINTA_MAIN(tests)                                                                                              \
+    int main(int argc, char *argv[]) {                                                                                 \
+        if (argc > 1) {                                                                                                \
+            for (int i = 1; i < argc; i++) {                                                                           \
+                if (strcmp(argv[i], "-v") == 0) {                                                                      \
+                    debug = true;                                                                                      \
+                }                                                                                                      \
+                if (strcmp(argv[i], "-q") == 0) {                                                                      \
+                    allow_slow = false;                                                                                \
+                }                                                                                                      \
+            }                                                                                                          \
+        }                                                                                                              \
+        return run_tests(tests, sizeof(tests) / sizeof(tests[0]));                                                     \
+    }
 #endif // CINTA_H
