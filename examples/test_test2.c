@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 void test_testo2(test_info *info) {
-    CHECK(check_boolean, 1, 1, info);
+    CHECK(check_boolean, 1, 0, info);
 }
 
 void test_null2(test_info *info) {

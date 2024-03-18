@@ -3,13 +3,11 @@ CFLAGS=-Wall -Wextra
 
 SRCDIR=cinta
 OBJDIR=obj
-TESTDIR=tests
+EXAMPLEDIR=examples
 
 SRCFILES := $(shell find $(SRCDIR) -name "*.c")
-ALLFILES := $(SRCFILES) $(shell find $(SRCDIR) -name "*.h")
 OBJFILES := $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCFILES))
-TESTFILES := $(shell find $(TESTDIR) -name "*.c")
-
+EXAMPLEFILES := $(shell find $(EXAMPLEDIR) -name "*.c")
 
 # Create obj directory at the beginning
 $(shell mkdir -p $(OBJDIR))
@@ -17,19 +15,11 @@ $(shell mkdir -p $(OBJDIR))
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
+examples: $(EXAMPLEFILES) $(OBJFILES)
+	$(CC) -o example $(EXAMPLEFILES) $(OBJFILES) $(CFLAGS)
 
-.PHONY: format, clean 
-
-
-test: $(TESTFILES) $(SRCFILES)
-	$(CC) -o $@ $^ $(CFLAGS)
-	./test
-	
 format:
-	clang-format -i $(SRCDIR)/*.c $(TESTDIR)/*.c include/*.h
+	clang-format -i $(SRCDIR)/*.c $(TESTDIR)/*.c $(EXAMPLEDIR)/*.c include/*.h
 
 clean:
-	rm -rf $(OBJDIR) test
-
-
-
+	rm -rf $(OBJDIR) example
