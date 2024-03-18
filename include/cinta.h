@@ -6,6 +6,8 @@
 #define CHECK(checker, actual, expected, info) checker(actual, expected, __LINE__, __FILE__, info)
 #define CHECK_NULL(actual, info) check_null(actual, __LINE__, __FILE__, info)
 
+typedef enum speed_level { SLOW, FAST } speed_level;
+
 extern bool debug;
 extern bool allow_slow;
 
@@ -22,6 +24,7 @@ void destroy_test_info(test_info *);
 void print_test_info(const test_info *);
 
 typedef struct test_case {
+    const speed_level speed;
     const char *name;
     void (*function)(test_info *);
 } test_case;
@@ -37,9 +40,5 @@ void check_string(const char *, const char *, int, const char *, test_info *);
 void check_boolean(bool, bool, int, const char *, test_info *);
 void check_int(int, int, int, const char *, test_info *);
 void check_null(void *actual, int line, const char *file, test_info *info);
-
-// All the tests
-test_info *test_test();
-test_info *test_test2();
 
 #endif // CINTA_H

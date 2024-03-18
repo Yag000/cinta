@@ -78,6 +78,10 @@ void print_test_name(const char *name) {
 }
 
 void run_case(test_case test, test_info *info) {
+    if (!allow_slow && test.speed == SLOW) {
+        return;
+    }
+
     print_test_name(test.name);
     test.function(info);
 }
