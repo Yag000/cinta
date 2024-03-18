@@ -1,7 +1,8 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "test_core.h"
+#include "../include/cinta.h"
+#include "tests.h"
 
 bool debug;
 bool allow_slow = true;

@@ -1,13 +1,11 @@
 CC=gcc
 CFLAGS=-Wall -Wextra
-EXEC=main
 
-SRCDIR=src
+SRCDIR=cinta
 OBJDIR=obj
 TESTDIR=tests
 
 SRCFILES := $(shell find $(SRCDIR) -name "*.c")
-SRCFILES_NO_MAIN := $(filter-out $(SRCDIR)/main.c, $(SRCFILES))
 ALLFILES := $(SRCFILES) $(shell find $(SRCDIR) -name "*.h")
 OBJFILES := $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCFILES))
 TESTFILES := $(shell find $(TESTDIR) -name "*.c")
@@ -20,22 +18,18 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 
-.PHONY: all, clean 
+.PHONY: format, clean 
 
-all: $(EXEC)
 
-main: $(OBJFILES) 
-	$(CC) -o $@ $^ $(CFLAGS)
-
-test: $(TESTFILES) $(SRCFILES_NO_MAIN)
+test: $(TESTFILES) $(SRCFILES)
 	$(CC) -o $@ $^ $(CFLAGS)
 	./test
 	
 format:
-	clang-format -i $(SRCDIR)/*.c $(SRCDIR)/**/*.c
+	clang-format -i $(SRCDIR)/*.c $(TESTDIR)/*.c include/*.h
 
 clean:
-	rm -rf $(OBJDIR) $(EXEC) test
+	rm -rf $(OBJDIR) test
 
 
 

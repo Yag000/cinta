@@ -1,9 +1,7 @@
-#ifndef TEST_CORE_H
-#define TEST_CORE_H
+#ifndef CINTA_H
+#define CINTA_H
 
-#include <limits.h>
 #include <stdbool.h>
-#include <time.h>
 
 #define CHECK(checker, actual, expected, info) checker(actual, expected, __LINE__, __FILE__, info)
 #define CHECK_NULL(actual, info) check_null(actual, __LINE__, __FILE__, info)
@@ -44,4 +42,4 @@ void check_null(void *actual, int line, const char *file, test_info *info);
 test_info *test_test();
 test_info *test_test2();
 
-#endif // TEST_CORE_H
+#endif // CINTA_H

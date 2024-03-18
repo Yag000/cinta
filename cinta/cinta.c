@@ -1,12 +1,11 @@
 #include <assert.h>
-#include <fcntl.h>
-#include <linux/limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
-#include "test_core.h"
+#include "../include/cinta.h"
 
 static void print_green() {
     printf("\033[0;32m");

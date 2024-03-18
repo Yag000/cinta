@@ -1,4 +1,5 @@
-#include "test_core.h"
+#include "tests.h"
+#include <stdlib.h>
 
 void test_testo2(test_info *info) {
     CHECK(check_boolean, 1, 1, info);
