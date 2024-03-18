@@ -7,7 +7,7 @@ void test_testo(test_info *info);
 void test_null(test_info *info);
 
 test_info *test_test() {
-    test_case cases[2] = {test_testo, test_null};
+    test_case cases[2] = {{"testo", test_testo}, {"null", test_null}};
     return run_cases("test", cases, 2);
 }
 

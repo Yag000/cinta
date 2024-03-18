@@ -78,9 +78,9 @@ void print_test_name(const char *name) {
     }
 }
 
-void run_case(const char *name, test_case test, test_info *info) {
-    print_test_header(name);
-    test(info);
+void run_case(test_case test, test_info *info) {
+    print_test_name(test.name);
+    test.function(info);
 }
 
 test_info *run_cases(const char *name, test_case *cases, int size) {
@@ -89,7 +89,7 @@ test_info *run_cases(const char *name, test_case *cases, int size) {
     test_info *info = create_test_info();
 
     for (int i = 0; i < size; i++) {
-        run_case(name, cases[i], info);
+        run_case(cases[i], info);
     }
 
     info->time = clock_ticks_to_seconds(clock() - start);

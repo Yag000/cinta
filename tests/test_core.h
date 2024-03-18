@@ -23,7 +23,10 @@ test_info *create_test_info();
 void destroy_test_info(test_info *);
 void print_test_info(const test_info *);
 
-typedef void (*test_case)(test_info *);
+typedef struct test_case {
+    const char *name;
+    void (*function)(test_info *);
+} test_case;
 
 test_info *run_cases(const char *name, test_case *functions, int num_functions);
 

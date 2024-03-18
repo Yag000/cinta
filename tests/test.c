@@ -6,8 +6,6 @@
 bool debug;
 bool allow_slow = true;
 
-static void update_test_info(test_info *, test_info *);
-
 /** This is the main function for the test program. Every test should be
  * called from here and the results will be printed.
  */
