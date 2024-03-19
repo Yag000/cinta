@@ -6,18 +6,8 @@
 #include <unistd.h>
 
 #include "../include/cinta.h"
+#include "utils.h"
 
-static void print_green() {
-    printf("\033[0;32m");
-}
-
-static void print_red() {
-    printf("\033[0;31m");
-}
-
-static void print_no_color() {
-    printf("\033[0m");
-}
 
 /** Creates a new test_info. */
 test_info *create_test_info() {
@@ -46,10 +36,6 @@ void print_test_info(const test_info *info) {
     printf("passed: %d, failed: %d, total: %d, time: %f seconds\n", info->passed, info->failed, info->total,
            info->time);
     print_no_color();
-}
-
-double clock_ticks_to_seconds(clock_t ticks) {
-    return (double)ticks / CLOCKS_PER_SEC;
 }
 
 void print_test_header(const char *name) {
@@ -128,72 +114,4 @@ int run_tests(test *tests, int size) {
     destroy_test_info(info);
 
     return success ? EXIT_SUCCESS : EXIT_FAILURE;
-}
-
-void check_string(const char *expected, const char *actual, int line, const char *file, test_info *info) {
-    info->total++;
-    if (strcmp(expected, actual) != 0) {
-        print_red();
-        printf("Error: '%s' != '%s' at line %d in file %s\n", expected, actual, line, file);
-        print_no_color();
-        info->failed++;
-        return;
-    }
-    if (debug) {
-        print_green();
-        printf("Passed: '%s' == '%s' at line %d in file %s\n", expected, actual, line, file);
-        print_no_color();
-    }
-    info->passed++;
-}
-
-void check_boolean(bool expected, bool actual, int line, const char *file, test_info *info) {
-    info->total++;
-    if (expected != actual) {
-        print_red();
-        printf("Error: %d != %d at line %d in file %s\n", expected, actual, line, file);
-        print_no_color();
-        info->failed++;
-        return;
-    }
-    if (debug) {
-        print_green();
-        printf("Passed: %d == %d at line %d in file %s\n", expected, actual, line, file);
-        print_no_color();
-    }
-    info->passed++;
-}
-
-void check_int(int expected, int actual, int line, const char *file, test_info *info) {
-    info->total++;
-    if (expected != actual) {
-        print_red();
-        printf("Error: %d != %d at line %d in file %s\n", expected, actual, line, file);
-        print_no_color();
-        info->failed++;
-        return;
-    }
-    if (debug) {
-        print_green();
-        printf("Passed: %d == %d at line %d in file %s\n", expected, actual, line, file);
-        print_no_color();
-    }
-    info->passed++;
-}
-
-void check_null(void *actual, int line, const char *file, test_info *info) {
-    info->total++;
-    if (NULL != actual) {
-        print_red();
-        printf("Error: pointer should be NULL at line %d in file %s\n", line, file);
-        print_no_color();
-        info->failed++;
-        return;
-    }
-    if (debug) {
-        print_green();
-        printf("Passed: NULL pointer at line %d in file %s\n", line, file);
-        print_no_color();
-    }
-    info->passed++;
 }

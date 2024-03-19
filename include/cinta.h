@@ -62,4 +62,5 @@ void check_null(void *actual, int line, const char *file, test_info *info);
         }                                                                                                              \
         return run_tests(tests, sizeof(tests) / sizeof(tests[0]));                                                     \
     }
+
 #endif // CINTA_H
