@@ -7,10 +7,26 @@
 #include <unistd.h>
 
 #include "../include/cinta.h"
-#include "utils.h"
 
 static bool debug = false;
 static bool allow_slow = true;
+
+
+void print_green() {
+    printf("\033[0;32m");
+}
+
+void print_red() {
+    printf("\033[0;31m");
+}
+
+void print_no_color() {
+    printf("\033[0m");
+}
+
+double clock_ticks_to_seconds(clock_t ticks) {
+    return (double)ticks / CLOCKS_PER_SEC;
+}
 
 /** Creates a new test_info. */
 test_info *create_test_info() {
