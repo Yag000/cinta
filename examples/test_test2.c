@@ -2,11 +2,11 @@
 #include <stdlib.h>
 
 void test_testo2(test_info *info) {
-    CHECK(check_boolean, 1, 0, info);
+    CINTA_CHECK_INT(1, 0, info);
 }
 
 void test_null2(test_info *info) {
-    CHECK_NULL(NULL, info);
+    CINTA_CHECK_NULL(NULL, info);
 }
 
 test_info *test_test2() {

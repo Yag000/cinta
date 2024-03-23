@@ -2,13 +2,48 @@
 #define CINTA_H
 
 #include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
 
-#define CHECK(checker, actual, expected, info) checker(actual, expected, __LINE__, __FILE__, info)
-#define CHECK_NULL(actual, info) check_null(actual, __LINE__, __FILE__, info)
+void cinta_log(const char *fmt, ...);
 
-extern bool debug;
-extern bool allow_slow;
+#define CINTA_LOG_BOOL(bool, info, fmt, ...)                                                                           \
+    if (bool) {                                                                                                        \
+        info->passed++;                                                                                                \
+    } else {                                                                                                           \
+        cinta_log(fmt, ##__VA_ARGS__);                                                                                 \
+        info->failed++;                                                                                                \
+    }
+
+#define CINTA_CHECK_PRIMITIVE(T, actual, op, expected, fmt, file, line, info)                                          \
+    do {                                                                                                               \
+        T actual_val = (actual);                                                                                       \
+        T expected_val = (expected);                                                                                   \
+        CINTA_LOG_BOOL(actual_val op expected_val, info, "Failed: %s:%d: expected " fmt ", got " fmt "\n", file, line, \
+                       expected_val, actual_val);                                                                      \
+    } while (0)
+
+#define CINTA_CHECK(boolean, info) CINTA_LOG_BOOL(boolean, info, "Failed: %s:%d\n", __FILE__, __LINE__)
+
+#define CINTA_CHECK_INT(actual, expected, info)                                                                        \
+    CINTA_CHECK_PRIMITIVE(int, actual, ==, expected, "%d", __FILE__, __LINE__, info)
+
+#define CINTA_CHECK_CHAR(actual, expected, info)                                                                       \
+    CINTA_CHECK_PRIMITIVE(char, actual, ==, expected, "%c", __FILE__, __LINE__, info)
+
+#define CINTA_CHECK_PTR(actual, op, expected, info)                                                                    \
+    CINTA_CHECK_PRIMITIVE(const void *, actual, op, expected, "%p", __FILE__, __LINE__, info)
+
+#define CINTA_CHECK_NULL(actual, info) CINTA_CHECK_PTR(actual, ==, NULL, info)
+
+#define CINTA_CHECK_NOT_NULL(actual, info) CINTA_CHECK_PTR(actual, !=, NULL, info)
+
+#define CINTA_CUSTOM_CHECK(actual, expected, check, info)                                                              \
+    CINTA_LOG_BOOL(check(actual, expected), info, "Failed: %s:%d\n", __FILE__, __LINE__)
+
+#define CINTA_CHECK_STRING(actual, expected, info)                                                                     \
+    CINTA_LOG_BOOL(strcmp(actual, expected) == 0, info, "Failed: %s:%d: expected \"%s\", got \"%s\"\n", __FILE__,      \
+                   __LINE__, expected, actual)
 
 /** Structure to hold test information. */
 typedef struct test_info {
@@ -43,24 +78,6 @@ typedef test_info *(*test)();
 
 int run_tests(test *tests, int num_tests);
 
-void check_string(const char *, const char *, int, const char *, test_info *);
-void check_boolean(bool, bool, int, const char *, test_info *);
-void check_int(int, int, int, const char *, test_info *);
-void check_null(void *actual, int line, const char *file, test_info *info);
-
-#define CINTA_MAIN(tests)                                                                                              \
-    int main(int argc, char *argv[]) {                                                                                 \
-        if (argc > 1) {                                                                                                \
-            for (int i = 1; i < argc; i++) {                                                                           \
-                if (strcmp(argv[i], "-v") == 0) {                                                                      \
-                    debug = true;                                                                                      \
-                }                                                                                                      \
-                if (strcmp(argv[i], "-q") == 0) {                                                                      \
-                    allow_slow = false;                                                                                \
-                }                                                                                                      \
-            }                                                                                                          \
-        }                                                                                                              \
-        return run_tests(tests, sizeof(tests) / sizeof(tests[0]));                                                     \
-    }
+int cinta_main(int argc, char *argv[], test *tests, size_t num_tests);
 
 #endif // CINTA_H

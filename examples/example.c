@@ -6,6 +6,8 @@
 bool debug = false;
 bool allow_slow = true;
 
-test tests[] = {test_test, test_test2};
+test tests[2] = {test_test, test_test2};
 
-CINTA_MAIN(tests)
+int main(int argc, char *argv[]) {
+    return cinta_main(argc, argv, tests, 2);
+}

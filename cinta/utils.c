@@ -14,8 +14,6 @@ void print_no_color() {
     printf("\033[0m");
 }
 
-
 double clock_ticks_to_seconds(clock_t ticks) {
     return (double)ticks / CLOCKS_PER_SEC;
 }
-

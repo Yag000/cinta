@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +9,8 @@
 #include "../include/cinta.h"
 #include "utils.h"
 
+static bool debug = false;
+static bool allow_slow = true;
 
 /** Creates a new test_info. */
 test_info *create_test_info() {
@@ -63,6 +66,17 @@ void print_test_name(const char *name) {
     }
 }
 
+void cinta_log(const char *fmt, ...) {
+    print_red();
+
+    va_list args;
+    va_start(args, fmt);
+    vprintf(fmt, args);
+    va_end(args);
+
+    print_no_color();
+}
+
 void run_case(test_case test, test_info *info) {
     if (!allow_slow && test.speed == SLOW) {
         return;
@@ -114,4 +128,18 @@ int run_tests(test *tests, int size) {
     destroy_test_info(info);
 
     return success ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+
+int cinta_main(int argc, char *argv[], test *tests, size_t size) {
+    if (argc > 1) {
+        for (int i = 1; i < argc; i++) {
+            if (strcmp(argv[i], "-v") == 0) {
+                debug = true;
+            }
+            if (strcmp(argv[i], "-q") == 0) {
+                allow_slow = false;
+            }
+        }
+    }
+    return run_tests(tests, size);
 }

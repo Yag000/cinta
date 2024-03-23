@@ -12,9 +12,9 @@ test_info *test_test() {
 }
 
 void test_testo(test_info *info) {
-    CHECK(check_boolean, 1, 1, info);
+    CINTA_CHECK(1, info);
 }
 
 void test_null(test_info *info) {
-    CHECK_NULL(NULL, info);
+    CINTA_CHECK_NULL(NULL, info);
 }
