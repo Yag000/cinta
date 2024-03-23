@@ -12,9 +12,9 @@ test_info *test_test() {
 }
 
 void test_testo(test_info *info) {
-    CINTA_CHECK(1, info);
+    CINTA_ASSERT(1, info);
 }
 
 void test_null(test_info *info) {
-    CINTA_CHECK_NULL(NULL, info);
+    CINTA_ASSERT_NULL(NULL, info);
 }

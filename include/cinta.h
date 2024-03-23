@@ -15,7 +15,7 @@ void cinta_log(const char *fmt, ...);
         info->failed++;                                                                                                \
     }
 
-#define CINTA_CHECK_PRIMITIVE(T, actual, op, expected, fmt, file, line, info)                                          \
+#define CINTA_ASSERT_PRIMITIVE(T, actual, op, expected, fmt, file, line, info)                                         \
     do {                                                                                                               \
         T actual_val = (actual);                                                                                       \
         T expected_val = (expected);                                                                                   \
@@ -23,25 +23,25 @@ void cinta_log(const char *fmt, ...);
                        expected_val, actual_val);                                                                      \
     } while (0)
 
-#define CINTA_CHECK(boolean, info) CINTA_LOG_BOOL(boolean, info, "Failed: %s:%d\n", __FILE__, __LINE__)
+#define CINTA_ASSERT(boolean, info) CINTA_LOG_BOOL(boolean, info, "Failed: %s:%d\n", __FILE__, __LINE__)
 
-#define CINTA_CHECK_INT(actual, expected, info)                                                                        \
-    CINTA_CHECK_PRIMITIVE(int, actual, ==, expected, "%d", __FILE__, __LINE__, info)
+#define CINTA_ASSERT_INT(actual, expected, info)                                                                       \
+    CINTA_ASSERT_PRIMITIVE(int, actual, ==, expected, "%d", __FILE__, __LINE__, info)
 
-#define CINTA_CHECK_CHAR(actual, expected, info)                                                                       \
-    CINTA_CHECK_PRIMITIVE(char, actual, ==, expected, "%c", __FILE__, __LINE__, info)
+#define CINTA_ASSERT_CHAR(actual, expected, info)                                                                      \
+    CINTA_ASSERT_PRIMITIVE(char, actual, ==, expected, "%c", __FILE__, __LINE__, info)
 
-#define CINTA_CHECK_PTR(actual, op, expected, info)                                                                    \
-    CINTA_CHECK_PRIMITIVE(const void *, actual, op, expected, "%p", __FILE__, __LINE__, info)
+#define CINTA_ASSERT_PTR(actual, op, expected, info)                                                                   \
+    CINTA_ASSERT_PRIMITIVE(const void *, actual, op, expected, "%p", __FILE__, __LINE__, info)
 
-#define CINTA_CHECK_NULL(actual, info) CINTA_CHECK_PTR(actual, ==, NULL, info)
+#define CINTA_ASSERT_NULL(actual, info) CINTA_ASSERT_PTR(actual, ==, NULL, info)
 
-#define CINTA_CHECK_NOT_NULL(actual, info) CINTA_CHECK_PTR(actual, !=, NULL, info)
+#define CINTA_ASSERT_NOT_NULL(actual, info) CINTA_ASSERT_PTR(actual, !=, NULL, info)
 
-#define CINTA_CUSTOM_CHECK(actual, expected, check, info)                                                              \
+#define CINTA_CUSTOM_ASSERT(actual, expected, check, info)                                                             \
     CINTA_LOG_BOOL(check(actual, expected), info, "Failed: %s:%d\n", __FILE__, __LINE__)
 
-#define CINTA_CHECK_STRING(actual, expected, info)                                                                     \
+#define CINTA_ASSERT_STRING(actual, expected, info)                                                                    \
     CINTA_LOG_BOOL(strcmp(actual, expected) == 0, info, "Failed: %s:%d: expected \"%s\", got \"%s\"\n", __FILE__,      \
                    __LINE__, expected, actual)
 
