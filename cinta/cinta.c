@@ -12,7 +12,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "../include/cinta.h"
+#include "cinta.h"
 
 static bool debug = false;
 static bool allow_slow = true;

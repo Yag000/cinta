@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-#include "../include/cinta.h"
+#include "../cinta/cinta.h"
 #include "tests.h"
 
 #define NUMBER_TESTS 2

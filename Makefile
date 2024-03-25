@@ -21,7 +21,7 @@ examples: $(EXAMPLEFILES) $(OBJFILES)
 fmt: format
 
 format:
-	clang-format -i $(SRCDIR)/*.c $(EXAMPLEDIR)/*.c include/*.h
+	clang-format -i $(SRCDIR)/*.c $(EXAMPLEDIR)/*.c $(SRCDIR)/*.h
 
 clean:
 	rm -rf $(OBJDIR) example
