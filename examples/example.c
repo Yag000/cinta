@@ -3,8 +3,10 @@
 #include "../include/cinta.h"
 #include "tests.h"
 
-test tests[2] = {test_test, test_test2};
+#define NUMBER_TESTS 2
+
+test tests[NUMBER_TESTS] = {test_test, test_test2};
 
 int main(int argc, char *argv[]) {
-    return cinta_main(argc, argv, tests, 2);
+    return cinta_main(argc, argv, tests, NUMBER_TESTS);
 }

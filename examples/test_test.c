@@ -3,12 +3,14 @@
 
 #include "tests.h"
 
+#define NUMBER_TESTS 2
+
 void test_testo(test_info *info);
 void test_null(test_info *info);
 
 test_info *test_test() {
-    test_case cases[2] = {SLOW_CASE("testo", test_testo), SLOW_CASE("null", test_null)};
-    return run_cases("test", cases, 2);
+    test_case cases[NUMBER_TESTS] = {SLOW_CASE("testo", test_testo), SLOW_CASE("null", test_null)};
+    return run_cases("test", cases, NUMBER_TESTS);
 }
 
 void test_testo(test_info *info) {
