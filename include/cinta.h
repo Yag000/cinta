@@ -8,6 +8,7 @@
 void cinta_log(const char *fmt, ...);
 
 #define CINTA_LOG_BOOL(bool, info, fmt, ...)                                                                           \
+    info->total++;                                                                                                     \
     if (bool) {                                                                                                        \
         info->passed++;                                                                                                \
     } else {                                                                                                           \

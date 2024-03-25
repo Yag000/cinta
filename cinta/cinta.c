@@ -11,7 +11,6 @@
 static bool debug = false;
 static bool allow_slow = true;
 
-
 void print_green() {
     printf("\033[0;32m");
 }
