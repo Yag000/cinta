@@ -1,3 +1,9 @@
+/* Cinta - Small C testing framework
+ * Source code available at: https://github.com/Yag000/cinta
+ * Author: Yago Iglesias Vázquez <yago.iglesias.vazquez@gmail.com>
+ * License: MIT
+ */
+
 #include <assert.h>
 #include <stdarg.h>
 #include <stdio.h>
