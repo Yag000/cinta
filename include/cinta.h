@@ -62,10 +62,6 @@ typedef struct test_info {
     double time;
 } test_info;
 
-test_info *create_test_info();
-void destroy_test_info(test_info *);
-void print_test_info(const test_info *);
-
 typedef enum speed_level { SLOW, QUICK } speed_level;
 
 typedef struct test_case {
@@ -80,12 +76,10 @@ typedef struct test_case {
 #define SLOW_CASE(name, function) TEST_CASE(name, SLOW, function)
 #define QUICK_CASE(name, function) TEST_CASE(name, QUICK, function)
 
-test_info *run_cases(const char *name, test_case *functions, int num_functions);
+test_info *cinta_run_cases(const char *name, test_case *functions, int num_functions);
 
 // A test is a function that takes no arguments and returns a test_info*
 typedef test_info *(*test)();
-
-int run_tests(test *tests, int num_tests);
 
 int cinta_main(int argc, char *argv[], test *tests, size_t num_tests);
 
