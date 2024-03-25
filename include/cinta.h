@@ -25,6 +25,8 @@ void cinta_log(const char *fmt, ...);
 
 #define CINTA_ASSERT(boolean, info) CINTA_LOG_BOOL(boolean, info, "Failed: %s:%d\n", __FILE__, __LINE__)
 
+#define CINTA_ASSERT_FALSE(boolean, info) CINTA_ASSERT(!(boolean), info)
+
 #define CINTA_ASSERT_INT(actual, expected, info)                                                                       \
     CINTA_ASSERT_PRIMITIVE(int, actual, ==, expected, "%d", __FILE__, __LINE__, info)
 
